@@ -3,9 +3,15 @@ import './index.css';
 import App from './App.tsx';
 import { store } from './store/index.ts';
 import { Provider } from 'react-redux';
+import { UploadProvider } from "./contexts/UploadContext";
+import { SurveyProvider } from './contexts/SurveyContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <Provider store={store}>
-    <App />
+    <UploadProvider>
+      <SurveyProvider>
+        <App />
+      </SurveyProvider>
+    </UploadProvider>
   </Provider>
 )

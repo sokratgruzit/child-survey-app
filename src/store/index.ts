@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import uploadReducer from './uploadSlice.ts';
-import surveyReducer from './surveySlice.ts';
+import stepReducer from './stepSlice.ts';
 
 export const store = configureStore({
   reducer: {
     upload: uploadReducer,
-    survey: surveyReducer,
+    step: stepReducer,
   },
 });
 

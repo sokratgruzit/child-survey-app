@@ -7,8 +7,8 @@ interface UIButtonProps {
   onClick: () => void;
   disabled?: boolean;
   backgroundColor?: string;
-  opacity?: number;
   icon?: React.ReactNode;
+  iconRight?: React.ReactNode;
   textColor?: string;
   iconColor?: string;
   className?: string;
@@ -19,24 +19,28 @@ const Button: React.FC<UIButtonProps> = ({
   onClick,
   disabled = false,
   backgroundColor = 'var(--blue-primary)',
-  opacity = 1,
   icon,
+  iconRight,
   textColor = '#fff',
   iconColor = '#fff',
-  className = '',
+  className = 'primary',
 }) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`${styles.button} ${className}`}
+      className={`${styles.button} ${styles[className]}`}
       style={{
-        backgroundColor,
-        opacity: disabled ? 0.6 : opacity,
-        color: textColor,
+        backgroundColor: disabled ? "var(--overlay-dark-10)" : backgroundColor,
+        color: disabled ? "var(--overlay-dark-50)" : textColor,
         cursor: disabled ? 'not-allowed' : 'pointer',
       }}
     >
+      {iconRight && (
+        <span className={styles.buttonIcon} style={{ color: iconColor }}>
+          {iconRight}
+        </span>
+      )}
       <span className={styles.buttonText}>{text}</span>
       {icon && (
         <span className={styles.buttonIcon} style={{ color: iconColor }}>

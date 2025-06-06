@@ -1,0 +1,36 @@
+.container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.steps {
+    font-size: 14px;
+    color: var(--gray);
+}
+
+.btnsWrap {
+    display: flex;
+    gap: 8px;
+    position: relative;
+}
+
+@media (max-width: 600px) {
+    .container {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .steps {
+        order: 2;
+        width: 100%;
+    }
+
+    .btnsWrap {
+        flex-direction: column;
+        width: 100%;
+        order: 1;
+    }
+}

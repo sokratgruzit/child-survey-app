@@ -1,0 +1,27 @@
+.container {
+  position: relative;
+  display: flex;
+  width: auto;
+  gap: 8px;
+  padding: 8px 12px;
+  background-color: var(--red-light);
+  border-radius: 50px;
+  max-width: 490px;
+}
+
+.warningText {
+  color: var(--red);
+  font-size: 14px;
+  width: auto;
+}
+
+.warningIcon {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 599px) {
+  .container {
+    border-radius: 8px;
+  }
+}
