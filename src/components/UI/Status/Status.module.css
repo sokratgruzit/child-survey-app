@@ -10,4 +10,18 @@
 
 .container span {
     font-size: 60px;
+    width: 100%;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .container span {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 440px) {
+    .container span {
+        font-size: 32px;
+    }
 }
