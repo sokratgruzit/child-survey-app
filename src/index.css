@@ -86,4 +86,64 @@ html, body {
   color: #3A353E;
 }
 
+.no-arrow .react-datepicker__triangle {
+  display: none;
+}
+
+.react-datepicker__header {
+  background: none;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+.react-datepicker__header h2 {
+  font-size: 18px;
+  font-family: 'CirceRounded';
+  color: #293244;
+  font-weight: 400;
+}
+
+.react-datepicker__day {
+  font-size: 14px;
+  color: #293244;
+  width: 36px;
+  height: 36px;
+  padding-top: 4px;
+}
+
+.react-datepicker__day-name {
+  color: #A0A9B8;
+  font-size: 12px;
+  text-transform: lowercase;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: #293244;
+  border-style: solid;
+  border-width: 1.5px 1.5px 0 0;
+  content: "";
+  display: block;
+  height: 7px;
+  position: absolute;
+  top: 18px;
+  width: 7px;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #5C6BC0; 
+  color: #fff; 
+  border-radius: 4px; 
+}
+
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--keyboard-selected:hover {
+  background-color: #5C6BC0 !important; 
+}
+
+.react-datepicker__day:hover {
+  background-color: #E8EAF6; 
+  border-radius: 4px;
+}
 

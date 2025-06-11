@@ -137,8 +137,7 @@
 }
 
 .input,
-.textarea,
-.inputDate {
+.textarea {
     border: 1px solid #A0A9B8;
     border-radius: 6px;
     padding: 10px 12px;
@@ -150,13 +149,8 @@
 }
 
 .input:focus,
-.textarea:focus,
-.inputDate {
+.textarea:focus {
     outline: 1px solid var(--purple);
-}
-
-.inputDate {
-    width: 100px;
 }
 
 .infoBox {
@@ -196,6 +190,39 @@ h3 {
     margin-top: 8px;
 }
 /* End Survey form */
+
+.datePickerWrap {
+    width: 100px;
+    position: relative;
+}
+
+.datePickerinput {
+    width: 100%;
+    position: relative;
+    height: 40px;
+    border: 1px solid #A0A9B8;
+    border-radius: 6px;
+    padding: 10px 12px;
+}
+
+.datePickerinput:focus {
+    outline: 1px solid var(--purple);
+}
+
+.calendar {
+    position: absolute !important;
+    left: -50px;
+    border: none !important;
+    box-shadow: -1px 1px 22px -1px rgba(0,0,0,0.16);
+    -webkit-box-shadow: -1px 1px 22px -1px rgba(0,0,0,0.16);
+    -moz-box-shadow: -1px 1px 22px -1px rgba(0,0,0,0.16);
+    font-family: 'CirceRounded' !important;
+    text-transform: capitalize !important;
+    font-weight: 400 !important;
+    color: #293244 !important;
+    font-size: 14px !important;
+    padding: 14px !important;
+}
 
 @media (max-width: 905px) {
     .imageCard {

@@ -1,16 +1,24 @@
 import React, { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
+import DatePicker, { registerLocale } from 'react-datepicker';
+import { ru } from 'date-fns/locale';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSurvey } from '../../contexts/SurveyContext';
+
 import styles from './Features.module.css';
+
+registerLocale('ru', ru);
 
 const frequencyOptions = ['Очень редко', 'Редко', 'Иногда', 'Часто', 'Всегда'] as const;
 const emotionalStateOptions = ['Отличное', 'Хорошее', 'Удовлетворительное', 'Неудовлетворительное', 'Очень плохое'] as const;
 
 const schema = z.object({
   childName: z.string().min(1, 'Введите имя ребенка'),
-  childDOB: z.string().min(1, 'Введите дату рождения'),
+  childDOB: z.coerce.date({
+    required_error: 'Введите дату рождения',
+    invalid_type_error: 'Неверный формат даты',
+  }),
   childGender: z.enum(['Мужской', 'Женский']),
   parentName: z.string().min(1, 'Введите имя родителя'),
   q1_1: z.enum(frequencyOptions),
@@ -64,8 +72,6 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-const todayStr = new Date().toISOString().substring(0, 10);
-
 const SurveyStep: React.FC = () => {
   const { setData, setAllFilled } = useSurvey();
 
@@ -79,7 +85,7 @@ const SurveyStep: React.FC = () => {
     resolver: zodResolver(schema),
     defaultValues: {
       childName: '',
-      childDOB: todayStr,
+      childDOB: new Date(),
       childGender: "Мужской",
       parentName: '',
       q1_1: 'Очень редко',
@@ -135,10 +141,21 @@ const SurveyStep: React.FC = () => {
   });
 
   useEffect(() => {
-    const data = getValues();
-    setAllFilled(isValid);
-    if (isValid) setData(data);
-  }, [isValid, getValues, setData, setAllFilled]);
+  const rawData = getValues();
+
+  setAllFilled(isValid);
+
+  if (isValid) {
+    const transformedData = {
+      ...rawData,
+      childDOB: rawData.childDOB instanceof Date
+        ? rawData.childDOB.toISOString()
+        : rawData.childDOB, // вдруг уже строка
+    };
+
+    setData(transformedData);
+  }
+}, [isValid, getValues, setData, setAllFilled]);
 
   const renderRadioGroup = (
     name: string,
@@ -185,7 +202,25 @@ const SurveyStep: React.FC = () => {
 
       <div className={styles.field}>
         <label className={styles.label}>Дата рождения ребенка</label>
-        <input {...register('childDOB')} style={{ width: 130 }} className={styles.input} type="date" />
+        <div className={styles.datePickerWrap}>
+          <Controller
+            control={control}
+            name="childDOB"
+            render={({ field }) => (
+              <DatePicker
+                selected={field.value instanceof Date ? field.value : null}
+                onChange={(date) => field.onChange(date)}
+                dateFormat="dd.MM.yyyy"
+                className={styles.datePickerinput}
+                calendarClassName={styles.calendar}
+                popperClassName="no-arrow"
+                locale="ru"
+                placeholderText="Выберите дату"
+                maxDate={new Date()}
+              />
+            )}
+          />
+        </div>
         {errors.childDOB && <p className={styles.error}>{errors.childDOB.message}</p>}
       </div>
 
