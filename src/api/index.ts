@@ -14,8 +14,7 @@ export async function apiFetch<T>(endpoint: string, options: FetchOptions = {}):
     });
 
     if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`Ошибка ${res.status}: ${errorText}`);
+        throw { status: res.status, message: res.statusText };
     }
 
     return res.json();

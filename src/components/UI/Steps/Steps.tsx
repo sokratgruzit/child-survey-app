@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../../../store/index.ts';
-import { nextStep, setLoading, prevStep } from '../../../store/stepSlice.ts';
-import { setTaskId, setStatus, setReportStatus } from '../../../store/uploadSlice.ts';
+import { nextStep, setLoading, prevStep, showPopup } from '../../../store/stepSlice.ts';
+import { setTaskId, setStatus, setReportStatus, setAllUploaded } from '../../../store/uploadSlice.ts';
 import { useState, useEffect } from 'react';
 
 import Button from "../Button/Button";
@@ -62,7 +62,10 @@ const Steps = () => {
     const [disabled, setDisabled] = useState<boolean>(false);
 
     const handleStepBack = async () => {
-        if (step === 2) dispatch(prevStep());
+        if (step === 2) {
+            dispatch(prevStep());
+            dispatch(setAllUploaded(false));
+        }
 
         if (step === 3) {
 
@@ -92,7 +95,7 @@ const Steps = () => {
                 }
             } catch (error) {
                 console.error("Ошибка при загрузке файлов:", error);
-                // Можно показать сообщение пользователю
+                console.log(error);
             } finally {
                 dispatch(setLoading(false));
             }
@@ -114,8 +117,16 @@ const Steps = () => {
 
                 dispatch(setTaskId(response.task_id));
                 dispatch(setStatus(response.message));
-            } catch (error) {
-                console.error("Ошибка при загрузке файлов:", error);
+            } catch (error: any) {
+                const errorMessage = error.message || 'Произошла ошибка при отправке опроса';
+                const statusCode = error.status || 500;
+
+                // Вызов кастомного popup
+                dispatch(showPopup({
+                    title: `Ошибка ${statusCode}`,
+                    description: errorMessage,
+                    show: true
+                }));
             } 
         }
     };

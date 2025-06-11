@@ -9,6 +9,7 @@ import SurveyStep from './components/features/SurveyStep';
 import ReportPage from './components/features/ReportPage';
 import FloatingImage from './components/UI/FloatingImage/FloatingImage';
 import Status from './components/UI/Status/Status.tsx';
+import Error from './components/UI/Error/Error.tsx';
 
 import styles from "./App.module.css";
 import Title from './components/UI/Title/Title';
@@ -33,6 +34,7 @@ function App() {
 
   const step = useSelector((state: RootState) => state.step.value);
   const reportStatus = useSelector((state: RootState) => state.upload.reportStatus);
+  const showPopup = useSelector((state: RootState) => state.step.showPopup);
 
   const [title, setTitle] = useState<string>(titles[0]);
   const [statusData, setStatusData] = useState<StatusProps>({
@@ -105,6 +107,7 @@ function App() {
 
   return (
     <>
+      {showPopup.show && <Error title={showPopup.title} description={showPopup.description} />}
       {statusData.display && <Status textColor={statusData.textColor} text={statusData.text} layoutColor={statusData.layoutColor} />}
       <FloatingImage src="/images/render.webp" floatAmplitude={1.2} size={200} anchor={{ x: -40, y: -40 }} />
       <FloatingImage src="/images/star.webp" floatAmplitude={.5} size={200} anchor={{ x: -20, y: -30 }} />
